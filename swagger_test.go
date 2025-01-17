@@ -1,10 +1,9 @@
 package ginSwagger
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/gin-contrib/gzip"
@@ -51,7 +50,7 @@ func TestWrapCustomHandler(t *testing.T) {
 	assert.Equal(t, w2.Header()["Content-Type"][0], "application/json; charset=utf-8")
 
 	// Perform body rendering validation
-	w2Body, err := ioutil.ReadAll(w2.Body)
+	w2Body, err := io.ReadAll(w2.Body)
 	assert.NoError(t, err)
 	assert.Equal(t, doc.ReadDoc(), string(w2Body))
 
@@ -96,7 +95,7 @@ func TestDisablingWrapHandler(t *testing.T) {
 	assert.Equal(t, http.StatusOK, performRequest(http.MethodGet, "/simple/favicon-16x16.png", router).Code)
 	assert.Equal(t, http.StatusNotFound, performRequest(http.MethodGet, "/simple/notfound", router).Code)
 
-	_ = os.Setenv(disablingKey, "true")
+	t.Setenv(disablingKey, "true")
 
 	router.GET("/disabling/*any", DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
 
@@ -116,7 +115,7 @@ func TestDisablingCustomWrapHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, performRequest(http.MethodGet, "/simple/index.html", router).Code)
 
-	_ = os.Setenv(disablingKey, "true")
+	t.Setenv(disablingKey, "true")
 
 	router.GET("/disabling/*any", DisablingCustomWrapHandler(&Config{}, swaggerFiles.Handler, disablingKey))
 

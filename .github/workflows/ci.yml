@@ -24,6 +24,14 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.60
+
+      - name: Goimports Check
+        uses: DarthBenro008/goimports-check-action@v0.1.0
+
       - name: test
         run: go test -coverprofile=coverage.txt -covermode=atomic
 
