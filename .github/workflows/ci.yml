@@ -27,5 +27,11 @@ jobs:
       - name: test
         run: go test -coverprofile=coverage.txt -covermode=atomic
 
-      - name: coverage
-        run: bash <(curl -s https://codecov.io/bash)
+      - name: test
+        run: go test -coverprofile=coverage.txt -covermode=atomic
+
+      - name: go coverage
+        run: go tool cover -func=coverage.txt
+
+#      - name: coverage
+#        run: bash <(curl -s https://codecov.io/bash)
