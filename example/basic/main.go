@@ -3,11 +3,11 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/vipradwivedi/gin-swagger"
 
-	"github.com/swaggo/gin-swagger/example/basic/api"
+	"github.com/vipradwivedi/gin-swagger/example/basic/api"
 
-	_ "github.com/swaggo/gin-swagger/example/basic/docs"
+	_ "github.com/vipradwivedi/gin-swagger/example/basic/docs"
 )
 
 // @title Swagger Example API
@@ -33,5 +33,8 @@ func main() {
 	url := ginSwagger.URL("http://petstore.swagger.io:8080/swagger/doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
-	r.Run()
+	err := r.Run()
+	if err != nil {
+		return
+	}
 }

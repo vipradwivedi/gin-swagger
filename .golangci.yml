@@ -1,0 +1,154 @@
+run:
+  timeout: 5m
+
+# The linters are added from the list of available linters in the golangci-lint documentation as of Feb 08, 2024
+# https://golangci-lint.run/usage/linters/
+linters:
+  enable:
+    # Default linters enabled by golangci-lint
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+
+    # Linters added by the team
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - cyclop
+    - decorder
+    - dogsled
+    - dupl
+    - dupword
+    - durationcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exhaustive
+    - forbidigo
+    - funlen
+    - ginkgolinter
+    - gocheckcompilerdirectives
+    - gochecksumtype
+    - gofmt
+    - goheader
+    - goimports
+    - gomodguard
+    - goprintffuncname
+    - gosmopolitan
+    - grouper
+    - importas
+    - loggercheck
+    - makezero
+    - mirror
+    - nakedret
+    - nilerr
+    - nolintlint
+    - nosprintfhostport
+    - predeclared
+    - promlinter
+    - protogetter
+    - reassign
+    - rowserrcheck
+    - sloglint
+    - sqlclosecheck
+    - tenv
+    - testableexamples
+    - thelper
+    - tparallel
+    - wastedassign
+    - zerologlint
+
+  disable:
+    - depguard
+    - exhaustruct
+    - forcetypeassert
+    - gci
+    - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godox
+    - gofumpt
+    - gomoddirectives
+    - gosec
+    - inamedparam
+    - interfacebloat
+    - ireturn
+    - lll
+    - maintidx
+    - misspell
+    - musttag
+    - nestif
+    - nilnil
+    - nlreturn
+    - noctx
+    - nonamedreturns
+    - paralleltest
+    - perfsprint
+    - prealloc
+    - revive
+    - stylecheck
+    - tagalign
+    - tagliatelle
+    - testifylint
+    - testpackage
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - varnamelen
+    - whitespace
+    - wrapcheck
+    - wsl
+
+linters-settings:
+  forbidigo:
+    forbid:
+      - '^errors\.Wrap$'
+      - '^errors\.Wrapf$'
+  gci: {}
+
+  cyclop:
+    # Maximum complexity of a function.
+    # If lower than 0, disable the check.
+    # Default: 10
+    max-complexity: 20
+
+  gocritic:
+    disabled-checks:
+      - commentFormatting
+
+  lll:
+    line-length: 150
+
+  funlen:
+    # Checks the number of lines in a function.
+    # If lower than 0, disable the check.
+    # Default: 60
+    lines: 99
+    # Checks the number of statements in a function.
+    # If lower than 0, disable the check.
+    # Default: 40
+    statements: 60
+    # Ignore comments when counting lines.
+    # Default false
+    ignore-comments: false
+
+issues:
+  # Set to true to view problems with newly added or modified code exclusively.
+  new: false
+
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - mirror
+    - path: testing.go
+      linters:
+        - staticcheck

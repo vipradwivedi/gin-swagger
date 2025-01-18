@@ -11,8 +11,7 @@ type Book struct {
 	Year   *uint16 `json:"year"`
 }
 
-//
-// @Summary Get a list of books in the the store
+// @Summary Get a list of books in the store
 // @Description get string by ID
 // @Accept  json
 // @Produce  json

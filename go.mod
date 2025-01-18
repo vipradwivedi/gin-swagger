@@ -1,6 +1,6 @@
-module github.com/swaggo/gin-swagger
+module github.com/vipradwivedi/gin-swagger
 
-go 1.17
+go 1.23
 
 require (
 	github.com/gin-contrib/gzip v0.0.6

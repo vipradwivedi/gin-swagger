@@ -4,9 +4,9 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/vipradwivedi/gin-swagger"
 
-	_ "github.com/swaggo/gin-swagger/example/basic/docs"
+	_ "github.com/vipradwivedi/gin-swagger/example/basic/docs"
 )
 
 // @title Swagger Example API
@@ -31,5 +31,8 @@ func main() {
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
-	r.Run()
+	err := r.Run()
+	if err != nil {
+		return
+	}
 }

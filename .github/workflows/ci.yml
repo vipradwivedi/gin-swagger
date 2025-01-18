@@ -2,23 +2,42 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
 
 jobs:
   test:
     strategy:
       matrix:
-        go: [ '1.17.x', '1.18.x','1.19.x', '1.20.x' ]
-    runs-on: ubuntu-latest
+        go:
+          - "1.23.x"
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@master
+      - name: checkout code
+        uses: actions/checkout@v4
+
       - name: Set up Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+
+      - name: Goimports Check
+        uses: DarthBenro008/goimports-check-action@v0.2.0
+
       - name: test
         run: go test -coverprofile=coverage.txt -covermode=atomic
-      - name: coverage
-        run: bash <(curl -s https://codecov.io/bash)
+
+      - name: test
+        run: go test -coverprofile=coverage.txt -covermode=atomic
+
+      - name: go coverage
+        run: go tool cover -func=coverage.txt
+
+#      - name: coverage
+#        run: bash <(curl -s https://codecov.io/bash)
