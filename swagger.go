@@ -25,6 +25,7 @@ type swaggerConfig struct {
 	PersistAuthorization     bool
 	Oauth2DefaultClientID    string
 	Oauth2UsePkce            bool
+	Filter                   bool
 }
 
 // Config stores ginSwagger configuration variables.
@@ -39,6 +40,7 @@ type Config struct {
 	PersistAuthorization     bool
 	Oauth2DefaultClientID    string
 	Oauth2UsePkce            bool
+	Filter                   bool
 }
 
 func (config Config) toSwaggerConfig() swaggerConfig {
@@ -54,6 +56,14 @@ func (config Config) toSwaggerConfig() swaggerConfig {
 		PersistAuthorization:  config.PersistAuthorization,
 		Oauth2DefaultClientID: config.Oauth2DefaultClientID,
 		Oauth2UsePkce:         config.Oauth2UsePkce,
+		Filter:                config.Filter,
+	}
+}
+
+// Filter set the filter for the swagger ui
+func Filter(filter bool) func(*Config) {
+	return func(c *Config) {
+		c.Filter = filter
 	}
 }
 
@@ -277,6 +287,7 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
+	filter: {{.Filter}}, 
 	layout: "StandaloneLayout",
     docExpansion: "{{.DocExpansion}}",
 	deepLinking: {{.DeepLinking}},
